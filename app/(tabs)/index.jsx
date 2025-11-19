@@ -1,13 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from "react-native";
 
-const index = () => {
+export default function Index() {
     return (
-        <View>
-            <Text>Pge</Text>
+        <View
+            style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <Text>Edit app/index.tsx to edit this screen.</Text>
         </View>
-    )
+    );
 }
-
-export default index
-
-const styles = StyleSheet.create({})
