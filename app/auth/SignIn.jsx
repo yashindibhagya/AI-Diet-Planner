@@ -40,6 +40,8 @@ export default function SignIn() {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                console.log(errorMessage)
+                Alert.alert("Incorrect Email or Password", "Please enter valid email and Password")
             });
 
     }
