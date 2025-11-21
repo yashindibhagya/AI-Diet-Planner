@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor: Colors.PRIMARY,
         width: "100%",
-        borderRadius: 15
+        borderRadius: 15,
+        marginTop: 15
     },
     text: {
         fontSize: 16,

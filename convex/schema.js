@@ -5,8 +5,8 @@ export default defineSchema({
     Users: defineTable({
         name: v.string(),
         email: v.string(),
-        picture: v.string(),
-        subscribeID: v.string(),
+        picture: v.optional(v.string()),
+        subscribeID: v.optional(v.string()),
         credits: v.number(),
     })
 });
