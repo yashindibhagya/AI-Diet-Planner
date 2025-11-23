@@ -1,13 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native'
+import Entypo from '@expo/vector-icons/Entypo';
+import { Tabs } from "expo-router";
+import Colors from "../../shared/Colors";
 
-const _layout = () => {
+export default function TabLayout() {
     return (
-        <View>
-            <Text>_layout</Text>
-        </View>
+        <Tabs screenOptions={{
+            tabBarActiveTintColor: Colors.PRIMARY
+        }}>
+            <Tabs.Screen name='Home'
+                options={{
+                    tabBarIcon: ({ color, size }) =>
+                        <Entypo name="home" size={size} color={color} />
+
+                }} />
+
+            <Tabs.Screen name='Meals' />
+            <Tabs.Screen name='Progress' />
+            <Tabs.Screen name='Profile' />
+        </Tabs>
     )
 }
-
-export default _layout
-
-const styles = StyleSheet.create({})

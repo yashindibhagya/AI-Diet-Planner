@@ -28,12 +28,17 @@ export default function SignIn() {
             .then(async (userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                const userData = await convex.query(api.Users.GetUser, {
-                    email: email
-                })
-
-                console.log(userData);
-                setUser(userData)
+                if (email) {
+                    const userData = await convex.query(api.Users.GetUser, {
+                        email: email
+                    });
+                    console.log('User data from Convex:', userData);
+                    if (userData) {
+                        setUser(userData);
+                    } else {
+                        console.log('No user found with email:', email);
+                    }
+                }
 
                 // ...
             })

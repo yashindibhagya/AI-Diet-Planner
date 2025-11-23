@@ -43,6 +43,7 @@ export default function SignUp() {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 Alert.alert('Sign Up Error', errorMessage)
+                console.log(errorMessage)
                 // ..
             });
     }

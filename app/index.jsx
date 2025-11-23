@@ -3,7 +3,7 @@ import { api } from "@/convex/_generated/api";
 import { useConvex } from "convex/react";
 import { useRouter } from "expo-router";
 import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import Button from "../components/shared/Button";
 import { auth } from '../config/FirebaseConfig';
@@ -11,19 +11,26 @@ import Colors from "../shared/Colors";
 
 export default function Index() {
   const router = useRouter();
-  const { user, setUser } = useConvex(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const convex = useConvex();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (userInfo) => {
-      console.log(userInfo?.email)
-
-      const userData = await convex.query(api.Users.GetUser, {
-        email: userInfo?.email
-      })
-      setUser(userData)
-
-    })
+      if (userInfo?.email) {
+        try {
+          const userData = await convex.query(api.Users.GetUser, {
+            email: userInfo.email
+          });
+          setUser(userData || null);
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+      router.replace('/(tabs)/Home');
+    });
     return () => unsubscribe();
   }, [])
 
