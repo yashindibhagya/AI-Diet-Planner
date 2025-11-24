@@ -9,7 +9,7 @@ export default function Home() {
 
     useEffect(() => {
         if (!user?.weight) {
-            //router.replace('/preference')
+            router.replace('/preference')
         }
     })
     return (
