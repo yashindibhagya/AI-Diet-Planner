@@ -8,7 +8,9 @@ export default function Input({ placeholder, password = false, onChangeText, lab
             width: '100%'
         }}>
             <Text style={{
-                fontWeight: 'medium'
+                fontWeight: 'medium',
+                marginBottom: 5,
+                fontSize: 18
             }}>{label}</Text>
             <TextInput placeholder={placeholder}
                 secureTextEntry={password}
@@ -18,7 +20,7 @@ export default function Input({ placeholder, password = false, onChangeText, lab
                     borderWidth: 1,
                     borderRadius: 10,
                     width: '100%',
-                    fontSize: 18,
+                    fontSize: 16,
                     paddingVertical: 15,
                     marginTop: 2
                 }}
