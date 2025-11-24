@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useMutation } from 'convex/react';
 import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Button from '../../components/shared/Button';
 import Input from "../../components/shared/Input";
 import { UserContext } from '../../context/UserContext';
@@ -21,26 +21,37 @@ export default function Preferance() {
     const router = useRouter()
 
     const OnContinue = async () => {
-        if (!weight || !height || !gender) {
+        if (!weight || !height || !gender || !goal) {
             Alert.alert('Fill All the details', 'Enter all details to proceed')
             return;
         }
+
         const data = {
-            uid: user?._id,
+            email: user?.email,  // Changed from uid to email
             weight: weight,
             height: height,
             gender: gender,
             goal: goal
         }
-        const result = await UpdateUserPref({
-            ...data
-        })
-        setUser(prev => ({
-            ...prev,
-            ...data
-        }))
 
-        router.replace('/(tabs)/Home')
+        try {
+            const result = await UpdateUserPref({
+                ...data
+            })
+
+            setUser(prev => ({
+                ...prev,
+                weight: weight,
+                height: height,
+                gender: gender,
+                goal: goal
+            }))
+
+            router.replace('/(tabs)/Home')
+        } catch (error) {
+            console.error('Error updating preferences:', error);
+            Alert.alert('Error', 'Failed to update preferences. Please try again.');
+        }
     }
 
     return (
