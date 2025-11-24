@@ -1,6 +1,7 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
+// In convex/schema.js
 export default defineSchema({
     Users: defineTable({
         name: v.string(),
@@ -12,5 +13,7 @@ export default defineSchema({
         weight: v.optional(v.string()),
         gender: v.optional(v.string()),
         goal: v.optional(v.string()),
-    })
+        createdAt: v.optional(v.number()),
+        updatedAt: v.optional(v.number()),
+    }).index('by_email', ['email'])  // Add this index
 });

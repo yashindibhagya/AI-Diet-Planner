@@ -47,20 +47,40 @@ export const GetUser = query({
 
 export const UpdateUserPref = mutation({
     args: {
-        uid: v.id('Users'),
+        email: v.string(),  // Required to identify the user
         height: v.string(),
         weight: v.string(),
         gender: v.string(),
         goal: v.string(),
     },
     handler: async (ctx, args) => {
-        const result = await ctx.db.patch(uid, {
+        // Find user by email
+        const user = await ctx.db.query('Users')
+            .withIndex('by_email', q => q.eq('email', args.email))
+            .first();
+
+        if (!user) {
+            // If user doesn't exist, create a new one with default values
+            return await ctx.db.insert('Users', {
+                name: 'New User',  // Default name
+                email: args.email,
+                credits: 0,       // Default credits
+                height: args.height,
+                weight: args.weight,
+                gender: args.gender,
+                goal: args.goal,
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+            });
+        }
+
+        // Update existing user
+        return await ctx.db.patch(user._id, {
             height: args.height,
             weight: args.weight,
+            gender: args.gender,
             goal: args.goal,
-            gender: args.gender
-        })
-        return result;
+            updatedAt: Date.now()
+        });
     }
-
-})
+});
